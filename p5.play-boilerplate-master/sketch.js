@@ -1,50 +1,66 @@
+
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
+const Body = Matter.Body;
+const Render = Matter.Render;
+const Constraint = Matter.Constraint;
+//var bobObject1,bobObject2,bobObject3, bobObject4,bobObject5, roofObject
+var rope1,rope2,rope3, rope4,rope5;
+var world;
 
-var engine, world;
-var wall, ball;
 
-function preload(){
+function setup() {
+	createCanvas(800, 600);
+	rectMode(CENTER);
 
+
+	engine = Engine.create();
+	world = engine.world;
+
+	roofObject=new roof(400,250,230,20);
+	bob1 = new bob(320,575,40)
+	bob2 = new bob(360,575,40)
+	bob3 = new bob(400,575,40)
+	bob4 = new bob(440,575,40)
+	bob5 = new bob(480,575,40)
+
+	
+	rope1=new rope(bob1.body,roofObject.body,-80, 0)
+	rope2=new rope(bob2.body,roofObject.body,-40, 0)
+	rope3=new rope(bob3.body,roofObject.body, 0, 0)
+	rope4=new rope(bob4.body,roofObject.body, 40, 0)
+	rope5=new rope(bob5.body,roofObject.body, 80, 0)
+
+
+	Engine.run(engine);
+	
+  
 }
 
-function setup(){
-  createCanvas(400, 400);
 
-  engine = Engine.create();
-  world = engine.world;
+function draw() {
+  rectMode(CENTER);
+  background(230);
+  roofObject.display();
 
-  roof = new Roof(170, 100, 150, 20);
+  rope1.display();
+  rope2.display();
+  rope3.display();
+  rope4.display();
+  rope5.display();
 
-  bob1 = new Bob(120, 300);
-  bob2 = new Bob(140, 300);
-  bob3 = new Bob(160, 300);
-  bob4 = new Bob(180, 300);
-  bob5 = new Bob(200, 300);
-
-  rope = new Rope(bob1.body, roof.body, -bobDiameter*2, 0);
-
-  Engine.run(engine);
-}
-
-
-function draw(){
-  background("lightGrey");
-  Engine.update(engine);
-
-  textSize(20);
-  text(mouseX, 100, 30);
-  text(mouseY, 200, 30);
-
-  roof.display();
   bob1.display();
   bob2.display();
   bob3.display();
   bob4.display();
   bob5.display();
+ 
 
-  rope.display();
+}
 
-  drawSprites();
+function keyPressed(){
+	if(keyDown("UP_ARROW")){
+		Matter.Body.applyForce(bob1.body,bob1.body.position,{x:-75,y:-67.5});
+	}
 }
